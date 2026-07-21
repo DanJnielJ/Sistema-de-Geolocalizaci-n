@@ -1,0 +1,64 @@
+/* Estilos para la tabla */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Estilos para los encabezados (th) */
+.table thead {
+    background-color: black;
+}
+
+.table thead th {
+    color: white;
+    text-align: center;
+}
+
+/* Estilos para el cuerpo de la tabla */
+.table tbody {
+    background-color: #fdfefe;
+}
+
+/* Mejorar la tabla */
+
+/*Estilos para las celdas*/
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px; 
+}
+
+/* Fila resaltada al pasar el ratón */
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1; 
+}
+
+/* Estilos de la paginación */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-item a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+}
+
+.pagination .page-item a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.active a {
+    background-color: #007bff;
+    color: white;
+}

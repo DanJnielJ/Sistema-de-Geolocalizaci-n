@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <!-- Para evitar problemas con tildes y demás simbolos -->
+         <meta charset="UTF-8" />
+        <!--Titulo-->
+        <title>
+            Panel de Administración
+        </title>
+
+        <!--estilos-->
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/tabla.css">
+    </head>
+
+    <!-- Cuerpo de la página -->
+    <body style="background-color: #eaecee;">
+
+        <!-- Barra de navegacion con link al formulario y barra de busqueda-->
+         <nav class="navbar" style="background-color: #a51d00;">
+            <!--Contenedor que ocupa todo el ancho de la página.
+            La clase defina es para que los elementos se alineen correctamente-->
+            <div class="container-fluid">
+                <!--Enlace que redirecciona a index-->
+                <a href="index.html" class="navbar-brand fw-bold text-light">Panel de Administración</a>
+
+                <!--Formulario que se organiza de manera flexible-->
+                <form class="d-flex">
+
+                    <input type="search" id="search" placeholder="Buscar Ejecutivo" class="form-control me-2" />
+                    
+                </form>
+            </div>
+        </nav>
+        
+        <!--Contenedor con margen superior e inferior 5 -->
+        <div class="container my-5">
+
+            <!--Modal utilizado para mostrar el detalle de un registro-->
+            <!--Tiene una aparición y desaparición suave
+            Se evita que el modal sea el foco (permite salir con esc)-->
+            <div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+                
+                <!--Se define la ventana emergente-->
+                <div class="modal-dialog">
+                    <!--Se muestra el contenido del modal-->
+                    <div class="modal-content">
+                        <!--Encabezado del modal-->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detalleModalLabel">Detalles del Viaje</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+
+                        <!--Cuerpo del modal (aquí se muestran los datos)-->
+                        <div class="modal-body">
+                            <!--Contenedor que recibe los datos desde el ajax.js-->
+                            <div id="detalle-viaje"></div>
+                            
+                            <button id="verMapa" class="btn btn-primary mt-3">Ver mapa</button>
+            
+                            <!-- Contenedor del mapa (inicialmente oculto) -->
+                            <div id="mapaContainer" style="width: 100%; height: 400px; display: none; margin-top: 15px;"></div>
+            
+                            <!-- Información de distancia y tiempo -->
+                            <div id="mapa-info" style="display: none; font-weight: bold;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Contiene tanto el formulario como la tabla-->
+            <div class="row p-10">
+
+                <!--div contenedor del formulario que utiliza 25% (3 columnas) del espacio-->
+                <div class="col-md-3">
+
+                    <!--Se define un contenedor del tujo tarjeta-->
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Formulario para hacer un nuevo viaje-->
+                            <form id="form-viaje">
+
+                                <div class="form-group">
+                                    <label>Usuario Solicitante: </label>
+                                    <input
+                                    type="text"
+                                    id="usuario_solicitante"
+                                    placeholder="Usuario Solicitante"
+                                    class="form-control my-2"/>
+                                    
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label>Fecha del Viaje: </label>
+                                    <input
+                                    type="date"
+                                    id="fecha_viaje"
+                                    class="form-control my-2"/>
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label>Dirección de Origen: </label>
+                                    <input
+                                    type="text"
+                                    id="origen_direccion"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                               
+
+                                <div class="form-group">
+                                    <label>Comuna de Origen: </label>
+                                    <input
+                                    type="text"
+                                    id="origen_comuna"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                               
+
+                                <div class="form-group">
+                                    <label>Contacto Solicitante (Teléfono): </label>
+                                    <input
+                                    type="text"
+                                    id="origen_contacto"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label>Dirección de Destino: </label>
+                                    <input
+                                    type="text"
+                                    id="destino_direccion"
+                                    placeholder=" "
+                                    class="form-control my-2"/>
+                                </div>
+                               
+
+                                <div class="form-group">
+                                    <label>Comuna de Destino: </label>
+                                    <input
+                                    type="text"
+                                    id="destino_comuna"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                               
+
+                                <div class="form-group">
+                                    <label>Contacto Destinatario (Teléfono): </label>
+                                    <input
+                                    type="text"
+                                    id="destino_contacto"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                                
+
+                                <div class="form-group">
+                                    <label>Usuario Ejecutivo: </label>
+                                    <input
+                                    type="text"
+                                    id="usuario_ejecutivo"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                             
+
+                                <div class="form-group">
+                                    <label>Valor del Viaje (Precio): </label>
+                                    <input
+                                    type="number"
+                                    id="valor"
+                                    placeholder=""
+                                    class="form-control my-2"/>
+                                </div>
+                                
+                                <input type="hidden" id="id">
+                                <button type="submit" class="btn btn-primary text-center w-100"> Guardar Viaje</button>
+                            </form>
+                            <!--Fin del formulario-->
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--Fin del div contenedor del formulario-->
+                
+                <!--div contenedor de la tabla (ocupa el 75% del espacio)-->
+                <div class="col-md-9">
+                    <!--Tabla que muestra los registros de la base de datos.-->
+                    <table class="table table-striped table-bordered table-sm table-hover">
+                        <!--Encabezado de la tabla-->
+                        <thead >
+                            <!--Fila (tr) con el nombre de las columnas (th)-->
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Usuario Solicitante</th>
+                                <th class="text-center">Usuario Ejecutivo</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Valor</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <!--Cuerpo de la tabla que se llena dinamicamente-->
+                        <tbody id="viajes" ></tbody>
+                    </table>
+                </div>
+                <!--Fin del div contenedor de la tabla-->
+
+                <!--div encargado de mostrar la paginación-->
+                <div id="pagination" class="pagination justify-content-center"></div>
+            </div>
+        </div>
+        <!--Fin del contenedor-->
+
+      
+        <!--Llama al archivo jquery-->
+        <script src="./js/jquery.js"></script>
+
+        <!--Llamada a la API de Google Maps-->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALffiBP7Pu_pwwIk19SZZe59EL_dFNgiw"></script>
+
+        <!-- Bootstrap JS (Necesario para modales, tooltips, etc.) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!--Llamada al archivo ajax-->
+        <script src="./js/ajax.js"></script>
+
+    </body>
+
+</html>
